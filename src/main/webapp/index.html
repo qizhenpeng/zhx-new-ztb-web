@@ -1,0 +1,199 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="static/jquery.js"></script>
+<script type="text/javascript" src="static/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap.css" />
+<script type="text/javascript" src="static/webuploader/webuploader.min.js"></script>
+<link rel="stylesheet" type="text/css" href="static/webuploader/webuploader.css" />
+<script type="text/javascript">
+	window.location.href = "modules/demo/login.jsp";
+var MAX_FILE_NUM=1;
+var MAX_FILE_SIZE=1024*1024*500;//500M
+var MAX_FILE_SIZE_NAME='500M';
+var fileCount = 0;
+var uploader;
+$(function(){
+	uploader = WebUploader.create({
+	    swf: 'static/webuploader/Uploader.swf',
+	    server: 'fileUpload',
+	    pick: '#picker',
+	    resize: false,
+	    //fileNumLimit : MAX_FILE_NUM,
+	    //fileSizeLimit : MAX_FILE_SIZE,
+	    multiple : false,
+	    duplicate : true,
+	    auto: true
+	});
+	// 当有文件被添加进队列的时候
+	uploader.on( 'filesQueued', function( files ) {
+		if(files.length + fileCount > MAX_FILE_NUM) {
+			alert('总文件个数不能超过'+MAX_FILE_NUM+'个');
+			uploader.reset();
+			return;
+		}
+		
+		for(var i in files) {
+			console.log(files[i].size)
+			if(files[i].size > MAX_FILE_SIZE) {
+				alert('文件大小不能超过'+MAX_FILE_SIZE_NAME);
+				uploader.reset();
+				return;
+			}
+		}
+		fileCount = files.length + fileCount;
+		for(var i in files) {
+			var file = files[i];
+		    $('#thelist').append( '<div id="' + file.id + '" class="item">' +
+		        '<div class="info">' + file.name + '<div style="float:right;"><span class="remove-this">取消</span></div></div>' +
+		        /* '<p class="state">等待上传...</p>' + */
+		    '</div>' );
+		    $li = $('#'+file.id);
+		    $li.find('.remove-this').on('click', function() {
+			    uploader.cancelFile( file );
+			    $li.remove();
+			    $('#tbslj').val('');
+			    fileCount--;
+			})
+		}
+	}); 	
+	
+	// 文件上传过程中创建进度条实时显示。
+	uploader.on( 'uploadProgress', function( file, percentage ) {
+	    var $li = $( '#'+file.id ),
+	        $percent = $li.find('.progress .progress-bar');
+	    // 避免重复创建
+	    if ( !$percent.length ) {
+	        $percent = $('<div class="progress progress-striped active">' +
+	          '<div class="progress-bar" role="progressbar" style="width: 0%">' +
+	          '</div>' +
+	        '</div>').appendTo( $li ).find('.progress-bar');
+	    }
+		
+	    $li.find('p.state').text('上传中');
+	    $percent.css( 'width', percentage * 100 + '%' );
+	});
+	
+	uploader.on( 'uploadSuccess', function( file, data ) {
+		$('#'+file.id).find('.progress').remove();
+		console.log(data);
+		$('#tbslj').val(data.savePath);
+	});
+/* 	uploader.on('error', function(errorCode) {
+		uploader.reset();
+		 switch (errorCode) {
+			case 'Q_EXCEED_NUM_LIMIT' :
+				alert("最多只能选择1个文件");
+			break;
+			case 'Q_EXCEED_SIZE_LIMIT' :
+				alert("文件过大");
+			break;
+		} 
+	}) */
+})
+function check() {
+	var progressNum = uploader.getStats().progressNum;
+	if(progressNum > 0) {
+		alert("请等待文件上传完成后再提交");
+		return false;
+	}
+	return true;
+}
+</script>
+</head>
+<body>
+	<form class="form-horizontal" action="提交至zbt-webapp" role="form" style="padding-top:20px;" onsubmit="return check(this)">
+	   <div class="form-group">
+	      <label for="firstname" class="col-sm-2 control-label">项目编号</label>
+	      <div class="col-sm-4">
+	         <input type="text" class="form-control" name="xmbh" >
+	      </div>
+	   </div>
+	   <div class="form-group">
+	      <label for="firstname" class="col-sm-2 control-label">项目名称</label>
+	      <div class="col-sm-4">
+	         <input type="text" class="form-control" name="xmmc" >
+	      </div>
+	   </div>
+	   <div class="form-group">
+	      <label for="firstname" class="col-sm-2 control-label">方案说明</label>
+	      <div class="col-sm-4">
+	         <textarea class="form-control" name="fasm" rows="3"></textarea>
+	      </div>
+	   </div>
+	   <div class="form-group">
+	      <label for="firstname" class="col-sm-2 control-label">招标人(机构)</label>
+	      <div class="col-sm-4">
+	         <input type="text" class="form-control" name="zbjg" >
+	      </div>
+	   </div>
+	   <div class="form-group">
+	      <label for="firstname" class="col-sm-2 control-label">招标方式</label>
+	      <div class="col-sm-4">
+	         <input type="text" class="form-control" name="zbfs" >
+	      </div>
+	   </div>
+	   <div class="form-group">
+	      <label for="firstname" class="col-sm-2 control-label">监督部门编号</label>
+	      <div class="col-sm-4">
+	         <input type="text" class="form-control" name="jdbmbh" >
+	      </div>
+	   </div>
+	   <div class="form-group">
+	      <label for="firstname" class="col-sm-2 control-label">监督部门名称</label>
+	      <div class="col-sm-4">
+	         <input type="text" class="form-control" name="jdbmmc" >
+	      </div>
+	   </div>
+	   <div class="form-group">
+	      <label for="firstname" class="col-sm-2 control-label">审核部门编号</label>
+	      <div class="col-sm-4">
+	         <input type="text" class="form-control" name="shbmbh" >
+	      </div>
+	   </div>
+	   <div class="form-group">
+	      <label for="firstname" class="col-sm-2 control-label">审核部门名称</label>
+	      <div class="col-sm-4">
+	         <input type="text" class="form-control" name="shbmmc" >
+	      </div>
+	   </div>
+	   <div class="form-group">
+	      <label for="firstname" class="col-sm-2 control-label">交易平台</label>
+	      <div class="col-sm-4">
+	         <input type="text" class="form-control" name="jypt" >
+	      </div>
+	   </div>
+	   <div class="form-group">
+	      <label for="firstname" class="col-sm-2 control-label">创建时间</label>
+	      <div class="col-sm-4">
+	         <input type="text" class="form-control" name="cjsj" >
+	      </div>
+	   </div>
+	   <div class="form-group">
+	      <label for="firstname" class="col-sm-2 control-label">责任人</label>
+	      <div class="col-sm-4">
+	         <input type="text" class="form-control" name="sbzrr" >
+	      </div>
+	   </div>
+	   
+	   <div class="form-group" >
+			<div class="col-sm-offset-2 col-sm-4">
+				<div id="uploader" class="wu-example">
+				    <!--用来存放文件信息-->
+				    <div id="thelist" class="uploader-list" style="width:300px;"></div>
+				    <div class="btns">
+				        <div id="picker">选择文件</div>
+		<!-- 		        <button id="ctlBtn" class="btn btn-default">开始上传</button> -->
+				    </div>
+				</div>
+			</div>
+	   </div>
+	   <input type="hidden" class="form-control" id="tbslj" name="tbslj" >
+	   <div class="form-group">
+	      <div class="col-sm-offset-4 col-sm-4">
+	         <button type="submit" class="btn btn-default" >提交</button>
+	      </div>
+	   </div>
+	</form>
+</body>
+</html>

@@ -1,0 +1,102 @@
+.row-fluid {
+	margin-bottom: 10px;
+}
+
+.row-form.simple {
+	border-bottom: 0;
+	padding-bottom: 0;
+}
+
+.row-form select {
+	background: #ffffff;
+}
+
+input[type="file"] {
+	height: 22px;
+	line-height: 20px;
+}
+table a{
+	margin-right: 5px;
+}
+
+.btn-white{
+	background-color: white;
+	background-image: url("about:blank");
+	color: #486B91;
+	text-shadow: 0 0;
+}
+
+/*****************************************/
+/* 头部样式配置：START
+/*****************************************/
+.header_title{
+	color: white; 
+	margin-left: 10px;
+}
+/*****************************************/
+/* 头部样式配置：END
+/*****************************************/
+
+
+/*****************************************/
+/* 表单校验提示信息样式：START
+/*****************************************/
+.row-form input.error{
+	border-color: red;
+}
+label.error{
+	color: red;
+}
+i.req:before{
+	content: "*";
+	color: red;
+	margin-right: 3px;
+}
+/*****************************************/
+/* 表单校验提示信息样式：END
+/*****************************************/
+
+
+/*****************************************/
+/* 文件上传控件样式：START
+/*****************************************/
+.uploader-picker{
+	display: inline-block;
+	line-height: 1.428571429;
+	vertical-align: middle;
+	margin: 0 12px 0 0;
+}
+.uploader-picker .webuploader-pick {
+	padding: 6px 12px;
+	display: block;
+}
+/*****************************************/
+/* 文件上传控件样式：END
+/*****************************************/
+
+/*****************************************/
+/* DataTables样式配置：START
+/*****************************************/
+.table-sorting .dataTables_filter label input[type="text"]{
+	width: 105px;
+}
+.table-sorting .dataTables_length{
+	padding-left: 10px;
+}
+.dataTable{
+	width: 100%;
+	/* table-layout:fixed; */
+}
+.text{
+	margin: 0;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    text-overflow: ellipsis;/* IE/Safari */
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;/* Opera */
+}
+/*****************************************/
+/* DataTables样式配置：END
+/*****************************************/
+

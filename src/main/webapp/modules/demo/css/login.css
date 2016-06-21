@@ -1,0 +1,15 @@
+body {padding-top: 50px;background:#eee;}
+.pnlMain {border:1px solid #ddd;max-height:450px;width:800px;margin:0 auto;padding:15px;overflow:hidden;
+	background:#fff;-webkit-border-radius: 8px;-moz-border-radius: 8px;-ms-border-radius: 8px;border-radius: 8px}
+.pnlImg img {float:left;max-width:520px;max-height:450px;margin-left:15px;padding:0 10px;}
+.pnlForm {display:inline-block;padding:5px 10px 10px;border-left:1px solid #ddd;margin-top:30px;}
+.pnlForm img {margin-bottom:200px;max-width:220px;}
+.form-horizontal .control-label {width: 50px;}
+.form-horizontal .controls {margin-left: 60px;*margin-left:0;}
+.form-horizontal .controls input {width:150px;}
+.form-horizontal :first-child.controls {*padding-left:67px;}
+.form-horizontal .control-group.error {margin-bottom: 0px;}
+.form-horizontal .control-group.error .control-label {color:#d00;}
+.form-horizontal .control-group label.error {font-size: 12px;color:#d00;}
+.form-horizontal .btn-primary {padding:3px 22px;}
+footer {position:fixed;_position:absolute; z-index:1000;bottom: 0;height:18px;width: 100%;}
